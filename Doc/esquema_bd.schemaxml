@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8mb4" collation="utf8mb4_0900_ai_ci">tiendadeportiva</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="clientes" view="colnames">
+<left>198</left>
+<top>69</top>
+<width>97</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `clientes` (
+  `idCliente` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `telefono` varchar(15) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idCliente`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci</sql_create_table>
+</table>
+<table name="detalleventas" view="colnames">
+<left>721</left>
+<top>40</top>
+<width>114</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `detalleventas` (
+  `idDetalle` int NOT NULL AUTO_INCREMENT,
+  `idVenta` int DEFAULT NULL,
+  `idProducto` int DEFAULT NULL,
+  `cantidad` int DEFAULT NULL,
+  `precioVenta` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`idDetalle`),
+  KEY `idVenta` (`idVenta`),
+  KEY `idProducto` (`idProducto`),
+  CONSTRAINT `detalleventas_ibfk_1` FOREIGN KEY (`idVenta`) REFERENCES `ventas` (`idVenta`),
+  CONSTRAINT `detalleventas_ibfk_2` FOREIGN KEY (`idProducto`) REFERENCES `productos` (`idProducto`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci</sql_create_table>
+</table>
+<table name="empleados" view="colnames">
+<left>304</left>
+<top>352</top>
+<width>112</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `empleados` (
+  `idEmpleado` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `puesto` varchar(50) DEFAULT NULL,
+  `salario` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`idEmpleado`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci</sql_create_table>
+</table>
+<table name="productos" view="colnames">
+<left>866</left>
+<top>218</top>
+<width>115</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `productos` (
+  `idProducto` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `categoria` varchar(50) DEFAULT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `stock` int NOT NULL,
+  `idProveedor` int DEFAULT NULL,
+  PRIMARY KEY (`idProducto`),
+  KEY `idProveedor` (`idProveedor`),
+  CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci</sql_create_table>
+</table>
+<table name="proveedores" view="colnames">
+<left>619</left>
+<top>307</top>
+<width>115</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `proveedores` (
+  `idProveedor` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `contacto` varchar(100) DEFAULT NULL,
+  `telefono` varchar(15) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idProveedor`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci</sql_create_table>
+</table>
+<table name="ventas" view="colnames">
+<left>438</left>
+<top>36</top>
+<width>112</width>
+<height>163</height>
+<sql_create_table>CREATE TABLE `ventas` (
+  `idVenta` int NOT NULL AUTO_INCREMENT,
+  `fecha` date NOT NULL,
+  `idCliente` int DEFAULT NULL,
+  `idEmpleado` int DEFAULT NULL,
+  `total` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`idVenta`),
+  KEY `idCliente` (`idCliente`),
+  KEY `idEmpleado` (`idEmpleado`),
+  CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`idCliente`),
+  CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`idEmpleado`) REFERENCES `empleados` (`idEmpleado`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
